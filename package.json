@@ -1,0 +1,16 @@
+{
+  "name": "animation",
+  "version": "1.0.0",
+  "description": "animate www",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.3",
+    "superagent": "^3.5.2"
+  }
+}

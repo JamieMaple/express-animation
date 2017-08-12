@@ -1,0 +1,22 @@
+.border-5px(@h, @color) {
+  &::after {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: @h;
+    background: @color;
+  }
+}
+.border-5px-bottom(@h, @color) {
+  &::after {
+    content: ' ';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: @h;
+    background: @color;
+  }
+}
