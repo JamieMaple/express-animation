@@ -5,7 +5,6 @@ let url = '/api'
 
 request
   .get(url)
-  .set('Accept', 'application/json')
   .query({tag: '吉普力'})
   .end(function(err, res){
     const appData = {}
@@ -23,7 +22,7 @@ request
         let s = ''
         for (let i = 0, length = appData.count; i < length; i++) {
           let item = appData.subjects[i]
-          s += `<li class="item"><img class="item-img" src="${item.images.large}"></li>`
+          s += `<li class="item"><a href="/animate/${item.id}"><img class="item-img" src="${item.images.large}"></a></li>`
         }
         itemsContainer.innerHTML = s
     }()
