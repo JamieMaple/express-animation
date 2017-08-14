@@ -1,0 +1,106 @@
+@import "./lessComponents/header.less";
+@import "./lessComponents/footer.less";
+
+@animate-title: 35px;
+@title-1: 30px;
+@title-2: 18px;
+@title-3: 12px;
+@normal-text: 16px;;
+
+.wrapper {
+  .header-wrapper {
+    height: 20%;
+    .animate-title {
+      color: #fff;
+      position: absolute;
+      left: 100px;
+      top: 50px;
+      font-size: @animate-title;
+    }
+  }
+  .main-body {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 20%;
+    height: 80%;
+    .header-container {
+      display: flex;
+      align-items: center;
+      padding: 40px 0 50px 0;
+      width: 75%;
+      margin: auto;
+      font-size: 0;
+      color: #6D7177;
+      .header-left {
+        background: #000;
+      }
+      .header-right {
+        position: relative;
+        flex: 1;
+        padding-left: 5%;
+        margin-top: 20px;
+        .title-group {
+          .title {
+            display: inline-block;
+            max-width: 70%;
+            color: #000;
+            font-size: @title-1;
+          }
+          .origin-title {
+            display: inline-block;
+            vertical-align: bottom;
+            font-size: @title-2;
+          }
+          .other-titles {
+            margin-top: 10px;
+            font-size: @title-3;
+          }
+        }
+        .rating-item {
+          position: absolute;
+          right: 10%;
+          top: 2px;
+          font-size: @normal-text;
+          .rating {
+            font-size: @title-1;
+            color: #F7C873;
+          }
+        }
+        .genres {
+          margin-top: 10px;
+          .genres-item {
+            display: inline-block;
+            padding: 5px 8px;
+            margin-right: 5px;
+            border-radius: 3px;
+            border: 1px solid #000;
+            font-size: @normal-text;
+            color: #000;
+          }
+        }
+        .summary {
+          margin-top: 10px;
+          .summary-title {
+            font-size: @title-2;
+          }
+          .summary-content {
+            text-indent: 2 * @title-2;
+            margin-top: 10px;
+            padding-bottom: 20px;
+            line-height: 20px;
+            font-size: @normal-text;
+          }
+        }
+        .share {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          margin-top: 10px;
+          font-size: @normal-text;
+          color: #86A6DF;
+        }
+      }
+    }
+  }
+}
