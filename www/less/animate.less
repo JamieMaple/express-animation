@@ -8,6 +8,17 @@
 @normal-text: 16px;;
 
 .wrapper {
+  .mask {
+    z-index: 200;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: #fff;
+    .loader-hook {
+      margin-left: 50%;
+      margin-top: 50%;
+    }
+  }
   .header-wrapper {
     height: 20%;
     font-size: 0;
@@ -58,7 +69,7 @@
     top: 20%;
     min-height: 80%;
     .body-wrapper {
-      padding: 40px 0 30px 0;
+      padding: 40px 0 80px 0;
       margin: auto;
       width: 75%;
       @media (max-width: 640px) {

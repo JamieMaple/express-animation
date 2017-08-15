@@ -13,5 +13,8 @@
     "express": "^4.15.3",
     "handlebars": "^4.0.10",
     "superagent": "^3.5.2"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
   }
 }

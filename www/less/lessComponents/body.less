@@ -6,7 +6,10 @@
     right: 0;
     z-index: 20;
     .body-wrapper {
-      padding: 60px 15% 80px;
+      position: relative;
+      padding: 60px 15% 60px 15%;
+      margin-bottom: 50px;
+      min-height: 300px;
       @media (max-width: 1024px) {
         padding: 40px 20px 80px;
       }
@@ -53,6 +56,17 @@
         border: 1px solid #abcdef;
         cursor: pointer;
         text-align: center;
+      }
+      .body-loader {
+        position: relative;
+        min-height: 300px;
+        z-index: 100;
+        background: #fff;
+        .loader-hook {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+        }
       }
     }
   }

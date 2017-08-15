@@ -8,8 +8,7 @@ function jsonp(appData) {
   let addItems = function() {
     let itemsContainer = document.getElementsByClassName('items-container')[0]
 
-    let s = ''
-    // 判断是否超出范围，若是即修改count为差值
+    // if larger than TOTAL_NUM
     if (appData.start + COUNT_NUM > TOTAL_NUM) {
       appData.count = TOTAL_NUM - appData.start
     }
@@ -22,41 +21,63 @@ function jsonp(appData) {
       li.innerHTML = `<a href="/animate/${item.id}"><img class="item-img" src="${item.images.large}"></a>`
       itemsContainer.appendChild(li)
     }
+    // add more DOM
+    var addMore = function() {
+      let more = document.createElement('div')
+      more.className = 'more'
+      more.innerHTML = '<span class="more-text"></span>'
+      itemsContainer.parentElement.appendChild(more)
+      // add more EventListener
+      var moreLoading = function() {
+        if(query.start < TOTAL_NUM) {
+          more.getElementsByTagName('span')[0].innerHTML = '加载更多'
+        }else {
+          more.getElementsByTagName('span')[0].innerHTML = '没有更多了'
+          more.style.border = 'none'
+          more.style.background = '#F7F7F7'
+          more.style.cursor = 'not-allowed'
+          return
+        }
+        // next li_objs loading
+        more.addEventListener('click', function loadMoreMovie() {
+          if(query.start >= TOTAL_NUM) {
+            return
+          }
+          getJSON({
+            url: 'https://api.douban.com/v2/movie/search',
+            query,
+            callback: 'jsonp'
+          })
+          query.start += COUNT_NUM
+        })
+        // more loading animation
+        more.addEventListener('click', function loadAnimation() {
+          more.parentElement.removeChild(more)
+          let loader = document.createElement('div')
+
+          loader.className = 'body-loader'
+          loader.innerHTML = '<div class="loader-hook loader--circularSquare"></div>'
+          itemsContainer.parentElement.appendChild(loader)
+        })
+      }()
+    }()
+    // then hide css animation
+    var hideLoader = function() {
+      let loader = document.getElementsByClassName('body-loader')[0]
+
+      loader.parentElement.removeChild(loader)
+
+      // click moreDOM to load more function
+    }()
   }()
 }
 let query = { tag:'吉卜力', start: 0, count: COUNT_NUM }
-getJSON({
-  url: 'https://api.douban.com/v2/movie/search',
-  query,
-  callback: 'jsonp'
-})
-// init start
-query.start += COUNT_NUM;
-// function
-(function() {
-  let more = document.getElementsByClassName('more')[0]
-  // next li_objs loading
-  more.addEventListener('click', loadMoreMovie)
-  // more-Element change
-  more.addEventListener('click', function() {
-    if(query.start >= TOTAL_NUM) {
-      more.getElementsByTagName('span')[0].innerHTML = '没有更多了'
-      more.style.border = 'none'
-      more.style.background = '#F7F7F7'
-      more.style.cursor = 'not-allowed'
-      more.removeEventListener('click', loadMoreMovie)
-    }
+window.onload = function() {
+  getJSON({
+    url: 'https://api.douban.com/v2/movie/search',
+    query,
+    callback: 'jsonp'
   })
-
-  function loadMoreMovie() {
-    if(query.start >= TOTAL_NUM) {
-      return
-    }
-    getJSON({
-      url: 'https://api.douban.com/v2/movie/search',
-      query,
-      callback: 'jsonp'
-    })
-    query.start += COUNT_NUM
-  }
-})()
+  // init start
+  query.start += COUNT_NUM;
+}
