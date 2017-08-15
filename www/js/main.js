@@ -4,20 +4,6 @@ const COUNT_NUM = 12
 // 豆瓣api请求数据有问题，越往后越有问题, 故设置上限
 const TOTAL_NUM = 46
 
-<<<<<<< HEAD
-request
-  .get(url)
-  .query({tag: '吉普力'})
-  .end(function(err, res){
-    const appData = {}
-    if (err || !res.ok) {
-      console.log(err)
-      return
-    } else {
-      let tempData = JSON.parse(res.text)
-      Object.assign(appData, tempData)
-      console.log(appData)
-=======
 function jsonp(appData) {
   let addItems = function() {
     let itemsContainer = document.getElementsByClassName('items-container')[0]
@@ -35,20 +21,9 @@ function jsonp(appData) {
       li.classList.add('item')
       li.innerHTML = `<a href="/animate/${item.id}"><img class="item-img" src="${item.images.large}"></a>`
       itemsContainer.appendChild(li)
->>>>>>> jsonp
     }
   }()
 }
-
-<<<<<<< HEAD
-        let s = ''
-        for (let i = 0, length = appData.count; i < length; i++) {
-          let item = appData.subjects[i]
-          s += `<li class="item"><a href="/animate/${item.id}"><img class="item-img" src="${item.images.large}"></a></li>`
-        }
-        itemsContainer.innerHTML = s
-    }()
-=======
 let query = { tag:'吉卜力', start: 0, count: COUNT_NUM }
 getJSON({
   url: 'https://api.douban.com/v2/movie/search',
@@ -71,7 +46,6 @@ query.start += COUNT_NUM;
       more.style.cursor = 'not-allowed'
       more.removeEventListener('click', loadMoreMovie)
     }
->>>>>>> jsonp
   })
 
   function loadMoreMovie() {

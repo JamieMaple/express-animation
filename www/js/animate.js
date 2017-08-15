@@ -24,11 +24,10 @@ function jsonp(appData){
     // main title
     main_title.innerHTML = appData.title
     // origin title
-    origin.getElementsByClassName('text')[0]
-    .innerHTML = appData.original_title
+    console.log(origin)
+    origin.getElementsByClassName('text')[0].innerHTML = appData.original_title
     // other names
-    others.getElementsByClassName('text')[0]
-    .innerHTML = appData.aka
+    others.getElementsByClassName('text')[0].innerHTML = appData.aka
   }()
   // rating change
   var ratingChange = function() {
