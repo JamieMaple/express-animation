@@ -2,11 +2,16 @@
 
 const express = require('express')
 const app = express()
+<<<<<<< HEAD
 const superagent = require('superagent')
+=======
+const path = require('path')
+>>>>>>> jsonp
 
 app.use(express.static('www'))
 
 app.get('/', function(req, res) {
+<<<<<<< HEAD
   res.send('./www/index.html')
 })
 
@@ -33,6 +38,12 @@ app.get('/api', function(req, res) {
   .end(function(err, response) {
     res.send(JSON.parse(response.text))
   })
+=======
+  res.sendFile(path.resolve(__dirname, 'www/index.html'))
+})
+app.get('/animate/:id', function(req, res) {
+  res.sendFile(path.resolve(__dirname, 'www/animate.html'))
+>>>>>>> jsonp
 })
 
 

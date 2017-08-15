@@ -6,24 +6,60 @@
     right: 0;
     z-index: 20;
     .body-wrapper {
-      padding: 60px 15% 30px;
+      padding: 60px 15% 80px;
+      @media (max-width: 1024px) {
+        padding: 40px 20px 80px;
+      }
+      @media (max-width: 320px) {
+        padding: 20px 10% 80px;
+      }
       .items-container {
         display: flex;
-        justify-content: space-between;
+        padding: 0;
         width: 100%;
         flex-wrap: wrap;
         font-size: 0;
         .item {
           width: 22%;
+<<<<<<< HEAD
           margin-bottom: 3%;
           a{
             display: block;
           }
+=======
+          margin-bottom: 20px;
+          margin-left: 3%;
+>>>>>>> jsonp
           .item-img {
             width: 100%;
             height: 100%;
           }
         }
+        @media (max-width: 1024px) {
+            .item {
+              width: 30%;
+              margin-left: 2.5%;
+            }
+        }
+        @media (max-width: 768px) {
+          .item {
+            width: 45%;
+            margin-left: 3%;
+          }
+        }
+        @media (max-width: 320px) {
+          .item {
+            width: 100%;
+            margin-left: 0;
+          }
+        }
+      }
+      .more {
+        padding: 15px 0;
+        border-radius: 5px;
+        border: 1px solid #abcdef;
+        cursor: pointer;
+        text-align: center;
       }
     }
   }
