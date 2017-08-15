@@ -7,6 +7,7 @@ function jsonp(appData){
 
   // dom title change
   document.getElementsByTagName('title')[0].innerHTML = appData.title + ' | スタジオジブリ'
+  document.getElementsByClassName('this-page')[0].innerHTML = appData.title
 
   // image change
   var imageChange = function(){
@@ -23,10 +24,10 @@ function jsonp(appData){
     // main title
     main_title.innerHTML = appData.title
     // origin title
-    origin.getElementsByTagName('span')[0]
+    origin.getElementsByClassName('text')[0]
     .innerHTML = appData.original_title
     // other names
-    others.getElementsByTagName('span')[0]
+    others.getElementsByClassName('text')[0]
     .innerHTML = appData.aka
   }()
   // rating change
@@ -52,6 +53,43 @@ function jsonp(appData){
   // url change
   var urlChange = function() {
     document.getElementsByClassName('share-url')[0].href = appData.share_url
+  }()
+  // celebrity change
+  var celebrityChange = function() {
+    // change directors
+    changeItem('directors', appData.directors)
+    // change casts
+    changeItem('casts', appData.casts)
+
+    function changeItem(dom, data) {
+      let mainObj = document.getElementsByClassName(dom)[0].getElementsByClassName('items-container')[0]
+      let length = data.length
+
+      if (length === 0) {
+        let li = document.createElement('li')
+
+        li.classList.add('item-empty')
+        li.innerHTML = '暂无信息'
+
+        mainObj.appendChild(li)
+        return
+      }
+
+      for (let i = 0; i < length; i++) {
+        let li = document.createElement('li')
+        li.classList.add('item')
+        let img_src
+        let name = data[i].name || '未知影人'
+        if (!data[i].avatars || data[i].avatars === null) {
+          img_src = 'https://img3.doubanio.com/f/movie/8dd0c794499fe925ae2ae89ee30cd225750457b4/pics/movie/celebrity-default-medium.png'
+        } else {
+          img_src = data[i].avatars.medium
+        }
+
+        li.innerHTML = `<img src=${img_src} class="item-img"><h2 class="name">${name}</h2>`
+        mainObj.appendChild(li)
+      }
+    }
   }()
 }
 

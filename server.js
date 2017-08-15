@@ -2,14 +2,15 @@
 
 const express = require('express')
 const app = express()
+const path = require('path')
 
 app.use(express.static('www'))
 
 app.get('/', function(req, res) {
-  res.sendfile('./www/index.html')
+  res.sendFile(path.resolve(__dirname, 'www/index.html'))
 })
 app.get('/animate/:id', function(req, res) {
-  res.sendfile('./www/animate.html')
+  res.sendFile(path.resolve(__dirname, 'www/animate.html'))
 })
 
 
