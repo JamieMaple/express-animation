@@ -15,8 +15,9 @@
     width: 100%;
     background: #fff;
     .loader-hook {
-      margin-left: 50%;
-      margin-top: 50%;
+      position: absolute;
+      top: 50%;
+      right: 50%;
     }
   }
   .header-wrapper {
@@ -89,7 +90,10 @@
           }
         }
         .header-left {
-          background: #000;
+          .animate-poster {
+            box-shadow: 1px 1px 5px #6D7177;
+            border-radius: 5px;
+          }
         }
         .header-right {
           position: relative;
@@ -205,9 +209,9 @@
             display: inline-block;
             font-size: 0;
             margin: 10px 2%;
-            @media (max-width: 400px) {}
             .item-img {
               width: 130px;
+              box-shadow: 1px 1px 5px #6D7177;
               @media (max-width: 414px) {
                 & {
                   width: 120px;
@@ -220,7 +224,7 @@
               }
             }
             .name {
-              margin-top: 5px;
+              margin-top: 10px;
               font-size: @normal-text;
               text-align: center;
               color: #6D7177;

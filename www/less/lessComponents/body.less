@@ -7,14 +7,14 @@
     z-index: 20;
     .body-wrapper {
       position: relative;
-      padding: 60px 15% 60px 15%;
-      margin-bottom: 50px;
+      padding: 60px 15% 50px 15%;
+      margin-bottom: 40px;
       min-height: 300px;
       @media (max-width: 1024px) {
-        padding: 40px 20px 80px;
+        padding: 40px 20px 40px;
       }
       @media (max-width: 320px) {
-        padding: 20px 10% 80px;
+        padding: 20px 10% 40px;
       }
       .items-container {
         display: flex;
@@ -29,6 +29,8 @@
           .item-img {
             width: 100%;
             height: 100%;
+            box-shadow: 2px 2px 10px #6D7177;
+            border-radius: 5px;
           }
         }
         @media (max-width: 1024px) {
