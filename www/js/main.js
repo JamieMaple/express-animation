@@ -55,7 +55,8 @@ function jsonp(appData) {
           more.parentElement.removeChild(more)
           let loader = document.createElement('div')
 
-          loader.className = 'body-loader'
+          loader.className = 'body-loader-bottom'
+          loader.position = 'relative'
           loader.innerHTML = '<div class="loader-hook loader--circularSquare"></div>'
           itemsContainer.parentElement.appendChild(loader)
         })
@@ -63,11 +64,13 @@ function jsonp(appData) {
     }()
     // then hide css animation
     var hideLoader = function() {
-      let loader = document.getElementsByClassName('body-loader')[0]
-
-      loader.parentElement.removeChild(loader)
-
-      // click moreDOM to load more function
+      let loader = document.getElementsByClassName('body-loader')[0] || document.getElementsByClassName('body-loader-bottom')[0]
+      let time = 0.5
+      loader.style.transition = 'opacity '+time+'s'
+      loader.style.opacity = 0
+      setTimeout(function() {
+        loader.parentElement.removeChild(loader)
+      }, time * 1000)
     }()
   }()
 }

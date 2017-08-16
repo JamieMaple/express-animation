@@ -4,7 +4,7 @@ const id = window.location.pathname.split('/')[2]
 
 function jsonp(appData){
   appData.summary = appData.summary.split('©')[0]
-
+  console.log(appData)
   // dom title change
   document.getElementsByTagName('title')[0].innerHTML = appData.title + ' | スタジオジブリ'
   document.getElementsByClassName('this-page')[0].innerHTML = appData.title
@@ -85,16 +85,21 @@ function jsonp(appData){
             img_src = data[i].avatars.medium
           }
 
-          li.innerHTML = `<img src=${img_src} class="item-img"><h2 class="name">${name}</h2>`
+          li.innerHTML = `<a href=${data[i].alt} target="_blank"><img src=${img_src} class="item-img"></a><a href=${data[i].alt} target="_blank"><h2 class="name">${name}</h2></a>`
           mainObj.appendChild(li)
         }
       }
     }()
   }()
   // hide mask
-  var hideMask = function() {
-    document.getElementsByClassName('mask')[0].style.display = 'none'
-  }()
+  var hideMask = function(time) {
+    var mask = document.getElementsByClassName('mask')[0]
+    mask.style.transition = 'opacity '+time+'s'
+    mask.style.opacity = 0
+    setTimeout(function() {
+      mask.parentElement.removeChild(mask)
+    }, time*1000)
+  }(0.5)
 }
 window.onload = function(){
   getJSON({
