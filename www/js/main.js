@@ -5,9 +5,10 @@ const COUNT_NUM = 12
 const TOTAL_NUM = 46
 
 function jsonp(appData) {
-  let addItems = function() {
+  !function addItems() {
     let itemsContainer = document.getElementsByClassName('items-container')[0]
-
+    let showItems = []
+    const time = 0.3
     // if larger than TOTAL_NUM
     if (appData.start + COUNT_NUM > TOTAL_NUM) {
       appData.count = TOTAL_NUM - appData.start
@@ -18,11 +19,12 @@ function jsonp(appData) {
       let li = document.createElement('li')
 
       li.classList.add('item')
-      li.innerHTML = `<a href="/animate/${item.id}"><img class="item-img" src="${item.images.large}"></a>`
+      li.innerHTML = `<a href="/animate/${item.id}"><img class="item-img" src="${item.images.large}" /></a>`
       itemsContainer.appendChild(li)
+      showItems.push(li)
     }
     // add more DOM
-    var addMore = function() {
+    !function addMore() {
       let more = document.createElement('div')
       more.className = 'more'
       more.innerHTML = '<span class="more-text"></span>'
@@ -61,16 +63,27 @@ function jsonp(appData) {
           itemsContainer.parentElement.appendChild(loader)
         })
       }()
+      // add to the showItems
+      showItems.push(more)
     }()
     // then hide css animation
-    var hideLoader = function() {
+    !function hideLoader() {
       let loader = document.getElementsByClassName('body-loader')[0] || document.getElementsByClassName('body-loader-bottom')[0]
-      let time = 0.5
       loader.style.transition = 'opacity '+time+'s'
       loader.style.opacity = 0
       setTimeout(function() {
         loader.parentElement.removeChild(loader)
       }, time * 1000)
+    }()
+    // showItems function
+    !function showItemsOpacityChange() {
+      for (var i = 0, length = showItems.length; i < length; i++) {
+        !function(i) {
+          setTimeout(function() {
+            showItems[i].style.opacity = 1
+          }, time*1000)
+        }(i)
+      }
     }()
   }()
 }
@@ -83,4 +96,21 @@ window.onload = function() {
   })
   // init start
   query.start += COUNT_NUM;
+  // init page
+  changeImgSize()
+}
+window.onresize = function() {
+  changeImgSize()
+}
+function changeImgSize() {
+  var browserWindow = document.getElementsByClassName('banner')[0]
+  var img = browserWindow.getElementsByClassName('banner-img')[0]
+  img.style.transition = 'all 0.2s'
+
+  var height = 1.2 * window.innerHeight
+  img.style.height = height + 'px'
+  var width = img.offsetWidth
+
+  img.style.top = '-'+(height - window.innerHeight) / 2 + 'px'
+  img.style.left = '-'+(width - window.innerWidth) / 2 + 'px'
 }

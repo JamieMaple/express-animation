@@ -5,7 +5,7 @@
 @title-1: 30px;
 @title-2: 18px;
 @title-3: 12px;
-@normal-text: 16px;;
+@normal-text: 16px;
 
 .wrapper {
   .mask {
@@ -23,6 +23,8 @@
   .header-wrapper {
     height: 20%;
     font-size: 0;
+    background: #000;
+    opacity: 0.6;
     .header-container {
       margin-top: 50px;
       margin-left: 60px;
@@ -209,11 +211,6 @@
             display: inline-block;
             font-size: 0;
             margin: 10px 2%;
-            &:hover {
-              & .name{
-                color: #f7c873;
-              }
-            }
             .item-img {
               width: 130px;
               box-shadow: 1px 1px 5px #6D7177;
@@ -233,6 +230,9 @@
               font-size: @normal-text;
               text-align: center;
               color: #6D7177;
+              &:hover {
+                  color: #f7c873;
+              }
             }
           }
         }
