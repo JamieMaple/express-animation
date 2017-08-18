@@ -99,18 +99,34 @@ window.onload = function() {
   // init page
   changeImgSize()
 }
+var main_width = window.innerWidth
+
 window.onresize = function() {
-  changeImgSize()
+  if (main_width !== window.innerWidth){
+    changeImgSize()
+  }
 }
+
 function changeImgSize() {
-  var browserWindow = document.getElementsByClassName('banner')[0]
-  var img = browserWindow.getElementsByClassName('banner-img')[0]
-  img.style.transition = 'all 0.2s'
+  var banner = document.getElementsByClassName('banner')[0]
+  var items = banner.getElementsByClassName('banner-item')
+  var length = items.length
 
-  var height = 1.2 * window.innerHeight
-  img.style.height = height + 'px'
-  var width = img.offsetWidth
+  !function() {
+    for (var i = 0; i < length; i++) {
+      var img = items[i].getElementsByTagName('img')[0]
+      img.style.height = 1.2 * window.innerHeight+'px'
 
-  img.style.top = '-'+(height - window.innerHeight) / 2 + 'px'
-  img.style.left = '-'+(width - window.innerWidth) / 2 + 'px'
+      // left and top
+      var height = img.offsetHeight
+      var width = img.offsetWidth
+
+      items[i].style.position = 'fixed'
+      items[i].style.transition = 'all 1.5s'
+      items[i].style.left = '-'+(width - window.innerWidth) / 2+'px'
+      items[i].style.top  = '-'+(height - window.innerHeight) / 4+'px'
+    }
+  }()
+
+
 }

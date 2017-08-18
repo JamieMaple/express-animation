@@ -1,6 +1,6 @@
 .border-5px(@h, @color) {
-  &::after {
-    content: ' ';
+  & ::after {
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -11,8 +11,8 @@
   }
 }
 .border-5px-bottom(@h, @color) {
-  &::after {
-    content: ' ';
+  & ::after {
+    content: '';
     position: absolute;
     bottom: 0;
     left: 0;
@@ -28,7 +28,7 @@
     transition: all .4s ease;
   }
   & :nth-child(5n) ::after {
-    content: 'sdfsd';
+    content: '';
     position: absolute;
     bottom: 0;
     left: 0;
@@ -38,7 +38,7 @@
     background: @color-1;
   }
   & :nth-child(5n+1) ::after {
-    content: 'sdfsd';
+    content: '';
     position: absolute;
     bottom: 0;
     left: 0;
@@ -48,7 +48,7 @@
     background: @color-2;
   }
   & :nth-child(5n+2) ::after {
-    content: 'sdfsd';
+    content: '';
     position: absolute;
     bottom: 0;
     left: 0;
@@ -58,7 +58,7 @@
     background: @color-3;
   }
   & :nth-child(5n+3) ::after {
-    content: 'sdfsd';
+    content: '';
     position: absolute;
     bottom: 0;
     left: 0;
@@ -68,7 +68,7 @@
     background: @color-4;
   }
   & :nth-child(5n+4) ::after {
-    content: 'sdfsd';
+    content: '';
     position: absolute;
     bottom: 0;
     left: 0;
