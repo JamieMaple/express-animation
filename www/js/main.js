@@ -3,10 +3,13 @@
 const COUNT_NUM = 12
 // 豆瓣api请求数据有问题，越往后越有问题, 故设置上限
 const TOTAL_NUM = 46
+// image params format
+var IMGPARAMS = { height: 441, width: 300 }
 
 function jsonp(appData) {
   !function addItems() {
     let itemsContainer = document.getElementsByClassName('items-container')[0]
+    let liItems = []
     let showItems = []
     const time = 0.3
     // if larger than TOTAL_NUM
@@ -19,12 +22,21 @@ function jsonp(appData) {
       let li = document.createElement('li')
 
       li.classList.add('item')
-      li.innerHTML = `<a href="/animate/${item.id}"><img class="item-img" src="${item.images.large}" /></a>`
+      li.innerHTML = 
+      `<a href="/animate/${item.id}"><img class="item-img" src="${item.images.large}"></a>`
+      let span = document.createElement('span')
+      span.className = 'mask'
+      span.innerHTML = `<span class="text">${item.title}</span>`
+      li.getElementsByTagName('a')[0].appendChild(span)
+
       itemsContainer.appendChild(li)
       showItems.push(li)
+      liItems.push(li)
     }
+    // init images 
+    changeItemImgsSize(IMGPARAMS, liItems)
     // add more DOM
-    !function addMore() {
+    var addMore = function () {
       let more = document.createElement('div')
       more.className = 'more'
       more.innerHTML = '<span class="more-text"></span>'
@@ -67,7 +79,7 @@ function jsonp(appData) {
       showItems.push(more)
     }()
     // then hide css animation
-    !function hideLoader() {
+    var hideLoader = function() {
       let loader = document.getElementsByClassName('body-loader')[0] || document.getElementsByClassName('body-loader-bottom')[0]
       loader.style.transition = 'opacity '+time+'s'
       loader.style.opacity = 0
@@ -76,7 +88,7 @@ function jsonp(appData) {
       }, time * 1000)
     }()
     // showItems function
-    !function showItemsOpacityChange() {
+    var showItemsOpacityChange = function() {
       for (var i = 0, length = showItems.length; i < length; i++) {
         !function(i) {
           setTimeout(function() {
@@ -97,17 +109,35 @@ window.onload = function() {
   // init start
   query.start += COUNT_NUM;
   // init page
-  changeImgSize()
+  createbanner(
+    [
+      './images/banner/1.jpg',
+      './images/banner/2.jpg',
+      './images/banner/3.jpg',
+      './images/banner/4.jpg',
+      './images/banner/5.jpg',
+      './images/banner/6.jpg',
+    ],
+    3
+  )
+  changeBannerSize()
 }
-var main_width = window.innerWidth
+var MAINWIDTH = window.innerWidth
 
 window.onresize = function() {
-  if (main_width !== window.innerWidth){
-    changeImgSize()
+  if (MAINWIDTH !== window.innerWidth){
+    // change banner
+    changeBannerSize()
+    // resize images
+    !function() {
+      var itemsContainer = document.getElementsByClassName('items-container')[0]
+      var imagesItems = itemsContainer.getElementsByClassName('item')
+      changeItemImgsSize(IMGPARAMS, imagesItems)
+    }()
   }
 }
 
-function changeImgSize() {
+function changeBannerSize() {
   var banner = document.getElementsByClassName('banner')[0]
   var items = banner.getElementsByClassName('banner-item')
   var length = items.length
@@ -129,4 +159,16 @@ function changeImgSize() {
   }()
 
 
+}
+function changeItemImgsSize(data, liObjs) {
+  // liObjs 0 and windowHeght persent
+  var mainWidth = liObjs[0].offsetWidth
+  var width_ratio = (mainWidth / data.width).toFixed(2)
+  var mainHiegth = width_ratio * 441
+  // images change
+  for (var i = 0, length = liObjs.length; i < length; i++) {
+    var img = liObjs[i].getElementsByTagName('img')[0]
+    img.style.height = mainHiegth+'px'
+    img.style.width = mainWidth+'px'
+  }
 }
