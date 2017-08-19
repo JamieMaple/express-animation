@@ -1,10 +1,11 @@
 // @@ banner component
 // @@ params: Images(Array), time(Number, seconds) , class(String)
-function createbanner(img_data, time, banner, banner_item){
-  img_data = img_data || undefined
-  time = time || 3
-  banner = banner || 'banner'
-  banner_item = banner_item || 'banner-item'
+function createbanner(img_obj){
+  img_data = img_obj.img_data || undefined
+  duration = img_obj.duration || 3
+  change_time = img_obj.change_time || 1.5
+  banner = img_obj.banner || 'banner'
+  banner_item = img_obj.banner_item || 'banner-item'
 
 
   var banner = document.getElementsByClassName(banner)[0]
@@ -38,7 +39,14 @@ function createbanner(img_data, time, banner, banner_item){
     for (var i = 0; i < length; i++) {
       items[i].classList.remove(Active)
     }
-    items[num].classList.add(Active)
+    var now_img = items[num]
+    if (now_img.style.transition) {
+      now_img.style.transition += ', opacity '+change_time+'s'
+    } else {
+      now_img.style.transition = 'opacity '+change_time+'s'
+    }
+    now_img.opacity = 1
+    now_img.classList.add(Active)
   }
   setInterval(function() {
     num++
@@ -46,6 +54,6 @@ function createbanner(img_data, time, banner, banner_item){
       num = 0
     }
     play(num)
-  }, time * 1000)
+  }, duration * 1000)
 }
 

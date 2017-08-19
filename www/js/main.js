@@ -2,19 +2,30 @@
 
 const COUNT_NUM = 12
 // 豆瓣api请求数据有问题，越往后越有问题, 故设置上限
-const TOTAL_NUM = 46
+const TOTAL_NUM = 67
 // image params format
 var IMGPARAMS = { height: 441, width: 300 }
+// Debug
+const DEBUG_MODE = true
 
 function jsonp(appData) {
+  if (DEBUG_MODE) {
+    console.log('appData:')
+    console.log(appData)
+  }
   !function addItems() {
     let itemsContainer = document.getElementsByClassName('items-container')[0]
     let liItems = []
     let showItems = []
-    const time = 0.3
+    const TIME = 0.3
     // if larger than TOTAL_NUM
-    if (appData.start + COUNT_NUM > TOTAL_NUM) {
+    if (appData.start >= TOTAL_NUM) {
+      appData.count = 0
+      return
+    } else if (appData.start + COUNT_NUM > TOTAL_NUM) {
       appData.count = TOTAL_NUM - appData.start
+    } else {
+      appData.count = appData.subjects.length
     }
 
     for (let i = 0, length = appData.count; i < length; i++) {
@@ -54,9 +65,6 @@ function jsonp(appData) {
         }
         // next li_objs loading
         more.addEventListener('click', function loadMoreMovie() {
-          if(query.start >= TOTAL_NUM) {
-            return
-          }
           getJSON({
             url: 'https://api.douban.com/v2/movie/search',
             query,
@@ -66,9 +74,8 @@ function jsonp(appData) {
         })
         // more loading animation
         more.addEventListener('click', function loadAnimation() {
-          more.parentElement.removeChild(more)
+          this.parentElement.removeChild(this)
           let loader = document.createElement('div')
-
           loader.className = 'body-loader-bottom'
           loader.position = 'relative'
           loader.innerHTML = '<div class="loader-hook loader--circularSquare"></div>'
@@ -81,19 +88,19 @@ function jsonp(appData) {
     // then hide css animation
     var hideLoader = function() {
       let loader = document.getElementsByClassName('body-loader')[0] || document.getElementsByClassName('body-loader-bottom')[0]
-      loader.style.transition = 'opacity '+time+'s'
+      loader.style.transition = 'opacity '+TIME+'s'
       loader.style.opacity = 0
       setTimeout(function() {
         loader.parentElement.removeChild(loader)
-      }, time * 1000)
+      }, TIME * 1000)
     }()
-    // showItems function
+    // showItems
     var showItemsOpacityChange = function() {
       for (var i = 0, length = showItems.length; i < length; i++) {
         !function(i) {
           setTimeout(function() {
             showItems[i].style.opacity = 1
-          }, time*1000)
+          }, TIME*1000)
         }(i)
       }
     }()
@@ -104,13 +111,14 @@ window.onload = function() {
   getJSON({
     url: 'https://api.douban.com/v2/movie/search',
     query,
-    callback: 'jsonp'
+    callback: 'jsonp',
+    debug_mode: DEBUG_MODE
   })
   // init start
   query.start += COUNT_NUM;
   // init page
-  createbanner(
-    [
+  createbanner({
+    img_data: [
       './images/banner/1.jpg',
       './images/banner/2.jpg',
       './images/banner/3.jpg',
@@ -118,14 +126,18 @@ window.onload = function() {
       './images/banner/5.jpg',
       './images/banner/6.jpg',
     ],
-    3
-  )
+    duration: 5,
+    change_time: 1.5
+  })
   changeBannerSize()
 }
 var MAINWIDTH = window.innerWidth
 
 window.onresize = function() {
   if (MAINWIDTH !== window.innerWidth){
+    if (DEBUG_MODE) {
+      console.log(MAINWIDTH+' change to '+window.innerWidth+' !')
+    }
     // change banner
     changeBannerSize()
     // resize images
@@ -152,7 +164,11 @@ function changeBannerSize() {
       var width = img.offsetWidth
 
       items[i].style.position = 'fixed'
-      items[i].style.transition = 'all 1.5s'
+      if (items[i].style.transition) {
+        items[i].style.transition += ', left 1.5s, right 1.5s'
+      } else {
+        items[i].style.transition = 'left 1.5s, right 1.5s'
+      }
       items[i].style.left = '-'+(width - window.innerWidth) / 2+'px'
       items[i].style.top  = '-'+(height - window.innerHeight) / 4+'px'
     }
