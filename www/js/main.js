@@ -6,7 +6,7 @@ var TOTAL_NUM = 67
 // image params format
 var IMGPARAMS = { height: 441, width: 300 }
 // Debug mode open
-var DEBUG_MODE = false
+var DEBUG_MODE = true
 // querySet
 var query = { tag:'吉卜力', start: 0, count: COUNT_NUM }
 // jsonp callback
@@ -110,6 +110,9 @@ function jsonp(appData) {
 }
 // load
 window.addEventListener('load', function() {
+  if (DEBUG_MODE) {
+    console.log('window onload!')
+  }
   getJSON({
     url: 'https://api.douban.com/v2/movie/search',
     query,
@@ -138,7 +141,7 @@ var MAINWIDTH = window.innerWidth
 window.addEventListener('resize', function() {
   if (MAINWIDTH !== window.innerWidth){
     if (DEBUG_MODE) {
-      console.log(MAINWIDTH+' change to '+window.innerWidth+' !')
+      console.log('window width change!\n'+MAINWIDTH+' change to '+window.innerWidth+' !')
     }
     // change banner
     changeBannerSize()
@@ -156,7 +159,7 @@ function changeBannerSize() {
   var items = banner.getElementsByClassName('banner-item')
   var length = items.length
 
-  !function() {
+  ;(function() {
     for (var i = 0; i < length; i++) {
       var img = items[i].getElementsByTagName('img')[0]
       img.style.height = 1.2 * window.innerHeight+'px'
@@ -167,16 +170,14 @@ function changeBannerSize() {
 
       items[i].style.position = 'fixed'
       if (items[i].style.transition) {
-        items[i].style.transition += ', left 1.5s, right 1.5s'
+        items[i].style.transition += ', left .2s, right .2s'
       } else {
-        items[i].style.transition = 'left 1.5s, right 1.5s'
+        items[i].style.transition = 'left .2s, right .2s'
       }
       items[i].style.left = '-'+(width - window.innerWidth) / 2+'px'
       items[i].style.top  = '-'+(height - window.innerHeight) / 4+'px'
     }
-  }()
-
-
+  })()
 }
 function changeItemImgsSize(data, liObjs) {
   // liObjs 0 and windowHeght persent

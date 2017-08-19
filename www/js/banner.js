@@ -20,17 +20,23 @@ function createbanner(img_obj){
 
   
   // init page
-  !function() {
+  ;(function() {
     // add banner-item
     for (var i = 0; i < length; i++) {
       var item = document.createElement('li')
       item.className = banner_item
       item.innerHTML = '<img src="' + img_data[i] + '" />'
       banner.appendChild(item)
+      // item opacity
+      if (item.style.transition) {
+        item.style.transition += ', opacity '+change_time+'s'
+      } else {
+        item.style.transition = 'opacity '+change_time+'s'
+      }
     }
     // init first banner item
     banner.getElementsByClassName(banner_item)[0].classList.add('active')
-  }()
+  })()
   // params: num for images, string class
   function play(num, Active) {
     num = num || 0
@@ -40,11 +46,6 @@ function createbanner(img_obj){
       items[i].classList.remove(Active)
     }
     var now_img = items[num]
-    if (now_img.style.transition) {
-      now_img.style.transition += ', opacity '+change_time+'s'
-    } else {
-      now_img.style.transition = 'opacity '+change_time+'s'
-    }
     now_img.opacity = 1
     now_img.classList.add(Active)
   }
