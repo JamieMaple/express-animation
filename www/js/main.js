@@ -35,7 +35,7 @@ function jsonp(appData) {
       let li = document.createElement('li')
 
       li.classList.add('item')
-      li.innerHTML = 
+      li.innerHTML =
       `<a href="/animate/${item.id}" target="_blank"><img class="item-img" src="${item.images.large}"></a>`
       let span = document.createElement('span')
       span.className = 'mask'
@@ -46,7 +46,7 @@ function jsonp(appData) {
       showItems.push(li)
       liItems.push(li)
     }
-    // init images 
+    // init images
     changeItemImgsSize(IMGPARAMS, liItems)
     // add more DOM
     var addMore = function () {
@@ -131,7 +131,7 @@ window.addEventListener('load', function() {
       './images/banner/5.jpg',
       './images/banner/6.jpg',
     ],
-    duration: 3,
+    duration: 2,
     change_time: 1.5
   })
   changeBannerSize()
@@ -152,32 +152,34 @@ window.addEventListener('resize', function() {
       changeItemImgsSize(IMGPARAMS, imagesItems)
     }()
   }
-}) 
+})
 // function part
 function changeBannerSize() {
   var banner = document.getElementsByClassName('banner')[0]
   var items = banner.getElementsByClassName('banner-item')
   var length = items.length
 
-  ;(function() {
+  !function() {
     for (var i = 0; i < length; i++) {
       var img = items[i].getElementsByTagName('img')[0]
-      img.style.height = 1.2 * window.innerHeight+'px'
-      img.style.minWidth = window.innerWidth+'px'
-      // left and top
-      var height = img.offsetHeight
-      var width = img.offsetWidth
+      var height = (1.2 * window.innerHeight).toFixed(2)
+      var width  = (16 / 9 * height).toFixed(2)
+      // format bannerImageSize
+      img.style.height = height+'px'
+      img.style.width  = width+'px'
 
-      items[i].style.position = 'fixed'
+      img.style.minWidth = window.innerWidth+'px'
+
       if (items[i].style.transition) {
-        items[i].style.transition += ', left .2s, right .2s'
+        items[i].style.transition += ', left 1.2s, top 1.2s'
       } else {
-        items[i].style.transition = 'left .2s, right .2s'
+        items[i].style.transition = 'left 1.2s, top 1.2s'
       }
-      items[i].style.left = '-'+(width - window.innerWidth) / 2+'px'
-      items[i].style.top  = '-'+(height - window.innerHeight) / 4+'px'
+
+      items[i].style.left = -((width - window.innerWidth) / 2).toFixed(2)+'px'
+      items[i].style.top  = -((height - window.innerHeight) / 4).toFixed(2)+'px'
     }
-  })()
+  }()
 }
 function changeItemImgsSize(data, liObjs) {
   // liObjs 0 and windowHeght persent

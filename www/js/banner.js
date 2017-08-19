@@ -12,20 +12,25 @@ function createbanner(img_obj){
 
   var length = img_data.length
   var num = 0
-  
+
   if (! length) {
     console.log('Image:'+img_data)
     return
   }
 
-  
+
   // init page
   ;(function() {
     // add banner-item
     for (var i = 0; i < length; i++) {
       var item = document.createElement('li')
+      var img = document.createElement('img')
+
+      img.src = img_data[i]
+      img.className = "banner-img"
       item.className = banner_item
-      item.innerHTML = '<img src="' + img_data[i] + '" />'
+
+      item.appendChild(img)
       banner.appendChild(item)
       // item opacity
       if (item.style.transition) {
@@ -57,4 +62,3 @@ function createbanner(img_obj){
     play(num)
   }, duration * 1000)
 }
-
