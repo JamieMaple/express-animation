@@ -1,13 +1,15 @@
 'use strict'
-
-const COUNT_NUM = 12
-// 豆瓣api请求数据有问题，越往后越有问题, 故设置上限
-const TOTAL_NUM = 67
+// every request num
+var COUNT_NUM = 12
+// up request limit
+var TOTAL_NUM = 67
 // image params format
 var IMGPARAMS = { height: 441, width: 300 }
-// Debug
-const DEBUG_MODE = true
-
+// Debug mode open
+var DEBUG_MODE = false
+// querySet
+var query = { tag:'吉卜力', start: 0, count: COUNT_NUM }
+// jsonp callback
 function jsonp(appData) {
   if (DEBUG_MODE) {
     console.log('appData:')
@@ -34,7 +36,7 @@ function jsonp(appData) {
 
       li.classList.add('item')
       li.innerHTML = 
-      `<a href="/animate/${item.id}"><img class="item-img" src="${item.images.large}"></a>`
+      `<a href="/animate/${item.id}" target="_blank"><img class="item-img" src="${item.images.large}"></a>`
       let span = document.createElement('span')
       span.className = 'mask'
       span.innerHTML = `<span class="text">${item.title}</span>`
@@ -106,8 +108,8 @@ function jsonp(appData) {
     }()
   }()
 }
-let query = { tag:'吉卜力', start: 0, count: COUNT_NUM }
-window.onload = function() {
+// load
+window.addEventListener('load', function() {
   getJSON({
     url: 'https://api.douban.com/v2/movie/search',
     query,
@@ -126,14 +128,14 @@ window.onload = function() {
       './images/banner/5.jpg',
       './images/banner/6.jpg',
     ],
-    duration: 5,
+    duration: 3,
     change_time: 1.5
   })
   changeBannerSize()
-}
+})
+// resize
 var MAINWIDTH = window.innerWidth
-
-window.onresize = function() {
+window.addEventListener('resize', function() {
   if (MAINWIDTH !== window.innerWidth){
     if (DEBUG_MODE) {
       console.log(MAINWIDTH+' change to '+window.innerWidth+' !')
@@ -147,8 +149,8 @@ window.onresize = function() {
       changeItemImgsSize(IMGPARAMS, imagesItems)
     }()
   }
-}
-
+}) 
+// function part
 function changeBannerSize() {
   var banner = document.getElementsByClassName('banner')[0]
   var items = banner.getElementsByClassName('banner-item')
@@ -158,7 +160,7 @@ function changeBannerSize() {
     for (var i = 0; i < length; i++) {
       var img = items[i].getElementsByTagName('img')[0]
       img.style.height = 1.2 * window.innerHeight+'px'
-
+      img.style.minWidth = window.innerWidth+'px'
       // left and top
       var height = img.offsetHeight
       var width = img.offsetWidth
