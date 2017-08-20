@@ -5,8 +5,8 @@ var COUNT_NUM = 12
 var TOTAL_NUM = 67
 // image params format
 var IMGPARAMS = { height: 441, width: 300 }
-// Debug mode open
-var DEBUG_MODE = true
+// Debug mode open or close
+var DEBUG_MODE = false
 // querySet
 var query = { tag:'吉卜力', start: 0, count: COUNT_NUM }
 // jsonp callback
@@ -109,6 +109,7 @@ function jsonp(appData) {
   }()
 }
 // load
+
 window.addEventListener('load', function() {
   if (DEBUG_MODE) {
     console.log('window onload!')
@@ -135,6 +136,7 @@ window.addEventListener('load', function() {
     change_time: 1.5
   })
   changeBannerSize()
+  fadeInAnimation(1.2, 'ease-out')
 })
 // resize
 var MAINWIDTH = window.innerWidth
@@ -192,4 +194,16 @@ function changeItemImgsSize(data, liObjs) {
     img.style.height = mainHiegth+'px'
     img.style.width = mainWidth+'px'
   }
+}
+function fadeInAnimation(time, timing) {
+  var title = document.getElementsByClassName('header-wrapper')[0].getElementsByClassName('title')[0]
+
+  time = time || 1
+  timing = timing || 'linear'
+  for (var i = 0, length = title.children.length; i < length; i++) {
+    var child_title = title.children[i]
+    child_title.style.transition = `font-size ${time}s ${timing}`
+    child_title.style.fontSize = '25px'
+  }
+  
 }
